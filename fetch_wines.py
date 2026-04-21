@@ -1,8 +1,8 @@
 """
 ==========================================
-設計者：侍酒師 Somm Yannick "YK" Liu
-© 2026. 根據 GNU GPLv3 授權。
-後端：Google Sheets 轉 JSON (容錯增強版)
+Developed by Sommelier Yannick "Y.K." Liu
+© 2026. All Rights Reserved.
+後端：Google Sheets 轉 JSON
 ==========================================
 """
 import pandas as pd
@@ -12,7 +12,7 @@ from io import StringIO
 
 SHEET_ID = "107NpWDkYD0lhIoC-ewLHZouWJoAfd8GTifBa8YTDMSQ"
 
-# 對應您的分頁 GID
+# 對應分頁 GID
 TABS = {
     "Sparkling": "2026459108",
     "French White": "125950905",
@@ -31,17 +31,17 @@ def fetch_and_clean():
             url = f"{base_url}&gid={gid}"
             response = requests.get(url)
             response.encoding = 'utf-8'
-            # 從第 3 列開始抓取 (skiprows=2)
+            # 從第 3 列開始 (skiprows=2)
             df = pd.read_csv(StringIO(response.text), skiprows=2, header=None)
             
             for _, r in df.iterrows():
                 if len(r) > 4 and pd.notnull(r[4]) and str(r[4]).strip() != "":
-                    # 依照您 GAS 的順序：0:Bin, 1:Ref, 2:產區1, 3:產區2, 4:酒名, 5:容量, 6:年份, 7:價格(Index 8), 8:庫存(Index 11), 9:描述(Index 13), 10:照片URL(Index 14)
+                    # 依照 GAS 順序：0:Bin, 1:Ref, 2:國家, 3:產區, 4:酒名, 5:容量, 6:年份, 7:價格(Index 8), 8:庫存(Index 11), 9:描述(Index 13), 10:照片URL(Index 14)
                     wine = [
                         str(r[0]) if pd.notnull(r[0]) else "",   # 0: Bin
                         str(r[1]) if pd.notnull(r[1]) else "",   # 1: Ref
-                        str(r[2]) if pd.notnull(r[2]) else "",   # 2: Region1
-                        str(r[3]) if pd.notnull(r[3]) else "",   # 3: Region2
+                        str(r[2]) if pd.notnull(r[2]) else "",   # 2: Country
+                        str(r[3]) if pd.notnull(r[3]) else "",   # 3: Region
                         str(r[4]),                                # 4: Name
                         str(r[5]) if pd.notnull(r[5]) else "",   # 5: Size
                         str(r[6]) if pd.notnull(r[6]) else "",   # 6: Year

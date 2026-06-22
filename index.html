@@ -24,44 +24,76 @@
             --admin-red: #8b0000;
         }
 
-        /* 基礎全域樣式 */
         body { background-color: #111; font-family: var(--font-main); margin: 0; -webkit-font-smoothing: antialiased; color: #333; }
         ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-thumb { background: var(--gold); }
 
-        /* 載入動畫 */
         #loader { 
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0,0,0,0.9); z-index: 4000;
-            flex-direction: column; justify-content: center; align-items: center;
+            background: rgba(0,0,0,0.9); z-index: 4000; flex-direction: column; justify-content: center; align-items: center;
         }
         .loader-text { color: var(--gold); font-family: var(--font-data); font-size: 1.2rem; letter-spacing: 4px; animation: breathe 2s infinite ease-in-out; }
         @keyframes breathe { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
 
-        /* 頂部搜尋與按鈕 */
-        .search-wrapper { position: fixed; top: 20px; right: 20px; z-index: 1200; }
+        /* 搜尋與語系按鈕排版 */
+        .search-wrapper { position: fixed; top: 20px; right: 20px; z-index: 1200; display: flex; gap: 8px; align-items: center; }
+        
+        /* 語系按鈕 */
+        .lang-group { display: flex; border: 1px solid var(--gold); background-color: rgba(0,0,0,0.85); box-shrink: 0; }
+        
+        .lang-btn {
+            background: transparent; border: none; color: var(--gold);
+            padding: 10px 12px; font-family: var(--font-data); cursor: pointer; outline: none; transition: 0.3s;
+            font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; box-sizing: border-box;
+        }
+        .lang-btn:not(:last-child) { border-right: 1px solid rgba(175, 148, 98, 0.3); }
+        .lang-btn:hover { background-color: rgba(255,255,255,0.1); }
+        
+        /* 當前選中語系的樣式 */
+        .lang-btn.active-lang { background-color: var(--gold); color: #000; }
+
         .search-input { 
             background-color: rgba(0,0,0,0.85); border: 1px solid var(--gold); color: var(--gold); 
-            padding: 12px 15px; font-family: var(--font-data); width: 120px;
-            outline: none; transition: 0.3s; border-radius: 0; font-size: 16px; 
+            padding: 12px 15px; font-family: var(--font-data); width: 100px; outline: none; transition: 0.3s; border-radius: 0; font-size: 16px; 
         }
-        .search-input:focus { width: 180px; border-color: #fff; background-color: #000; }
+        .search-input:focus { width: 150px; border-color: #fff; background-color: #000; }
 
         .open-btn { 
             display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer; 
-            background-color: rgba(0,0,0,0.8); color: var(--gold); padding: 10px 18px; 
-            border: 1px solid var(--gold); position: fixed; top: 20px; left: 20px; 
-            z-index: 1500; font-family: var(--font-data); transition: 0.3s; letter-spacing: 1px;
+            background-color: rgba(0,0,0,0.8); color: var(--gold); padding: 10px 18px; border: 1px solid var(--gold);
+            position: fixed; top: 20px; left: 20px; z-index: 1500; font-family: var(--font-data); transition: 0.3s; letter-spacing: 1px;
         }
         .open-btn.active-menu { background-color: var(--gold); color: #000; left: 210px; }
 
-        /* 側邊導覽欄 */
         .sidenav { height: 100%; width: 0; position: fixed; z-index: 1300; top: 0; left: 0; background-color: var(--steakhouse-black); overflow-x: hidden; transition: 0.5s; display: flex; flex-direction: column; border-right: 1px solid var(--gold); }
         .nav-links { flex: 1; padding-top: 80px; overflow-y: auto; }
-        .sidenav a { padding: 18px 32px; text-decoration: none; font-size: 1rem; color: var(--gold); display: block; cursor: pointer; transition: 0.2s; }
-        .sidenav a:hover { background: #222; border-left: 5px solid var(--gold); }
         
-        /* 價格滑桿過濾器 */
+        .nav-links .all-cat-btn { padding: 18px 32px; text-decoration: none; font-size: 1rem; color: var(--gold); display: block; cursor: pointer; transition: 0.2s; font-weight: bold; }
+        .nav-links .all-cat-btn:hover { background: #222; }
+
+        .big-cat-block { border-bottom: 1px solid #222; }
+        .big-cat-trigger { 
+            width: 100%; background: transparent; border: none; padding: 16px 32px; text-align: left; font-size: 0.95rem; color: #fff; cursor: pointer; 
+            display: flex; justify-content: space-between; align-items: center; font-family: var(--font-main); transition: 0.2s; box-sizing: border-box;
+        }
+        .big-cat-trigger:hover { background: #222; color: var(--gold); }
+        .big-cat-trigger .arrow { font-size: 0.7rem; color: var(--gold); transition: transform 0.3s; }
+        .big-cat-block.active .arrow { transform: rotate(180deg); }
+
+        .sub-tabs-container { display: none; background: #151515; padding: 5px 0; }
+        .sub-tabs-container.show { display: block; }
+        
+        .sub-tab-link { padding: 12px 32px 12px 45px; text-decoration: none; font-size: 0.85rem; color: var(--light-grey); display: block; cursor: pointer; transition: 0.2s; }
+        .sub-tab-link:hover { color: #fff; background: #222; border-left: 4px solid var(--gold); }
+        .sub-tab-link.active-sub { color: var(--gold); font-weight: 600; background: #201a12; border-left: 4px solid var(--gold); }
+        
+        .filter-section { padding: 20px 32px; border-top: 1px solid #333; background: #111; }
+        .filter-section-title { color: var(--gold); font-size: 0.75rem; letter-spacing: 2px; margin-bottom: 12px; font-family: var(--font-data); text-transform: uppercase; }
+        .filter-options-container { max-height: 140px; overflow-y: auto; padding-right: 5px; }
+        .filter-checkbox-label { display: flex; align-items: center; color: var(--light-grey); font-size: 0.8rem; margin-bottom: 8px; cursor: pointer; user-select: none; }
+        .filter-checkbox-label input { margin-right: 10px; accent-color: var(--gold); width: 14px; height: 14px; cursor: pointer; }
+        .filter-checkbox-label:hover { color: #fff; }
+
         .price-filter-section { padding: 20px 32px; border-top: 1px solid #333; background: #111; }
         .reset-btn { background: none; border: 1px solid #444; color: #888; font-size: 0.7rem; padding: 4px 8px; cursor: pointer; font-family: var(--font-data); margin-left: 8px; transition: 0.3s; }
         .slider-container { position: relative; width: 100%; height: 25px; margin-top: 10px; display: flex; align-items: center; }
@@ -71,104 +103,35 @@
         .price-input-flex { display: flex; justify-content: space-between; margin-top: 15px; }
         .price-box-input { background: #000; border: 1px solid #444; color: #fff; width: 45%; font-size: 0.8rem; padding: 8px; text-align: center; font-family: var(--font-data); }
 
-        /* 酒單主容器 */
         .menu-container { max-width: 900px; margin: 100px auto 40px; background: var(--paper); padding: 60px; border: 1px solid var(--gold); min-height: 80vh; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
         header { text-align: center; margin-bottom: 60px; border-bottom: 1px solid var(--gold); padding-bottom: 40px; }
         
-        /* 單項酒款樣式 */
         .wine-item { cursor: pointer; display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 35px; border-bottom: 1px solid #eee; padding-bottom: 25px; transition: 0.2s; position: relative; }
-        .wine-item.sold-out { opacity: 0.5; filter: grayscale(1); }
+        .wine-item.sold-out { opacity: 0.4; filter: grayscale(1); }
         .wine-name-row { font-size: 1.35rem; font-weight: 700; color: var(--steakhouse-black); line-height: 1.2; flex: 1; padding-right: 20px; }
-        
-        /* 價格顯示 */
-        .price-box { 
-            display: flex; justify-content: space-between; align-items: baseline; 
-            width: 150px; font-weight: 600; font-size: 1.35rem; 
-            border-bottom: 2px solid #000; padding-bottom: 5px; 
-            font-family: var(--font-data); flex-shrink: 0; 
-        }
+
+        .price-box { display: flex; justify-content: space-between; align-items: baseline; width: 150px; font-weight: 600; font-size: 1.35rem; border-bottom: 2px solid #000; padding-bottom: 5px; font-family: var(--font-data); flex-shrink: 0; }
         .price-box span:first-child { font-size: 0.8rem; color: var(--gold); }
 
-        /* 彈出視窗樣式 */
-        .modal { 
-            display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; 
-            background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); 
-            overflow-y: scroll; 
-            -webkit-overflow-scrolling: touch; 
-            scroll-behavior: auto !important;
-        }
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); overflow-y: scroll; -webkit-overflow-scrolling: touch; scroll-behavior: auto !important; }
         .close-modal-fixed { position: fixed; top: 25px; right: 30px; font-size: 50px; cursor: pointer; color: var(--gold); z-index: 2500; display: none; line-height: 1; }
         .modal-content { background: var(--paper); margin: 30px auto; padding: 40px; border: 1px solid var(--gold); width: 90%; max-width: 500px; position: relative; box-sizing: border-box; }
         #modalDescription { font-size: 1rem; line-height: 1.8; color:#444; white-space:pre-line; margin-bottom:40px; letter-spacing: 0.3px; }
 
-        /* 後台編輯區 */
-        .admin-editor-zone { 
-            background: var(--paper);
-            padding: 25px; 
-            border: 1px solid var(--gold);
-            margin-bottom: 30px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-        .admin-label {
-            font-family: var(--font-data);
-            font-size: 0.7rem;
-            color: var(--gold);
-            letter-spacing: 1.5px;
-            font-weight: 600;
-            display: block;
-            margin-bottom: 5px;
-        }
-        .admin-input { 
-            width: 100%; 
-            background: transparent;
-            border: none;
-            border-bottom: 1px solid #ccc; /* 簡潔下劃線 */
-            padding: 10px 0; 
-            margin-bottom: 20px; 
-            box-sizing: border-box; 
-            font-family: var(--font-data); 
-            font-size: 1rem; 
-            color: var(--steakhouse-black);
-            outline: none;
-            transition: 0.3s;
-        }
-        .admin-input:focus {
-            border-bottom-color: var(--gold);
-        }
-        .save-btn { 
-            width: 100%; 
-            background: var(--steakhouse-black); 
-            color: var(--gold); 
-            border: 1px solid var(--gold); 
-            padding: 14px; 
-            cursor: pointer; 
-            font-weight: 600; 
-            font-family: var(--font-data); 
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            transition: 0.3s;
-        }
-        .save-btn:hover {
-            background: var(--gold);
-            color: white;
-        }
-        .somm-interaction-tip { 
-            background: #fff; 
-            border: 1px solid #eee; 
-            color: #888; 
-            padding: 15px; 
-            font-size: 0.85rem; 
-            margin-bottom: 20px; 
-            font-style: italic; 
-            display: none; 
-            text-align: center;
-        }
+        .admin-editor-zone { background: var(--paper); padding: 25px; border: 1px solid var(--gold); margin-bottom: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .admin-label { font-family: var(--font-data); font-size: 0.7rem; color: var(--gold); letter-spacing: 1.5px; font-weight: 600; display: block; margin-bottom: 5px; }
+        .admin-input { width: 100%; background: transparent; border: none; border-bottom: 1px solid #ccc; padding: 10px 0; margin-bottom: 20px; box-sizing: border-box; font-family: var(--font-data); font-size: 1rem; color: var(--steakhouse-black); outline: none; transition: 0.3s; }
+        .admin-input:focus { border-bottom-color: var(--gold); }
+        .save-btn { width: 100%; background: var(--steakhouse-black); color: var(--gold); border: 1px solid var(--gold); padding: 14px; cursor: pointer; font-weight: 600; font-family: var(--font-data); letter-spacing: 2px; text-transform: uppercase; transition: 0.3s; }
+        .save-btn:hover { background: var(--gold); color: white; }
+        .somm-interaction-tip { background: #fff; border: 1px solid #eee; color: #888; padding: 15px; font-size: 0.85rem; margin-bottom: 20px; font-style: italic; display: none; text-align: center; }
 
         .signature-footer { text-align: center; margin-top: 60px; font-size: 0.7rem; color: #999; border-top: 1px solid #ddd; padding-top: 30px; font-family: var(--font-data); }
 
-        /* 手機版優化 */
         @media (max-width: 600px) { 
-            .menu-container { padding: 40px 15px; margin-top: 80px; } 
+            .menu-container { padding: 40px 15px; margin-top: 120px; } 
+            .search-wrapper { top: auto; bottom: 20px; right: 20px; left: 20px; justify-content: space-between; background: rgba(0,0,0,0.9); padding: 10px; border: 1px solid var(--gold); box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+            .search-input { width: 45% !important; }
             .wine-item { flex-direction: column; align-items: flex-start; padding-bottom: 15px; }
             .wine-name-row { font-size: 1.1rem; padding-right: 0; margin-bottom: 8px; }
             .price-box { align-self: flex-end; width: auto; min-width: 100px; font-size: 1.1rem; border-bottom: 1.5px solid var(--gold); padding-bottom: 2px; }
@@ -183,7 +146,14 @@
     
     <span class="close-modal-fixed" id="fixedCloseBtn" onclick="closeModal()">&times;</span>
 
-    <div class="search-wrapper"><input type="text" id="wineSearch" class="search-input" placeholder="Search..." oninput="filterWines()"></div>
+    <div class="search-wrapper">
+        <div class="lang-group">
+            <button id="btn-zh" class="lang-btn active-lang" onclick="setLanguage('ZH')">ZH</button>
+            <button id="btn-en" class="lang-btn" onclick="setLanguage('EN')">EN</button>
+            <button id="btn-jp" class="lang-btn" onclick="setLanguage('JP')">JP</button>
+        </div>
+        <input type="text" id="wineSearch" class="search-input" placeholder="Search..." oninput="filterWines()">
+    </div>
     
     <span class="open-btn" id="mainMenuBtn" onclick="toggleNav()">
         <span id="menuIcon">☰</span> <span id="btnText">Menu</span>
@@ -192,18 +162,28 @@
     <div id="mySidenav" class="sidenav">
         <div class="nav-links" id="dynamicNav"></div>
         
+        <div class="filter-section" id="varietySection" style="display:none;">
+            <div class="filter-section-title">Varieties</div>
+            <div class="filter-options-container" id="varietyContainer"></div>
+        </div>
+
+        <div class="filter-section" id="tagSection" style="display:none;">
+            <div class="filter-section-title">Tags</div>
+            <div class="filter-options-container" id="tagContainer"></div>
+        </div>
+        
         <div class="price-filter-section">
             <div style="color:var(--gold); font-size:0.75rem; letter-spacing:2px; margin-bottom:15px; font-family: var(--font-data);">
                 Price Range (NT$) <button class="reset-btn" onclick="resetPriceRange()">Reset↺</button>
             </div>
             <div class="slider-container">
                 <div class="slider-track" id="sliderTrack"></div>
-                <input type="range" min="0" max="150000" value="0" step="500" id="slider-1" oninput="slideOne()">
-                <input type="range" min="0" max="150000" value="150000" step="500" id="slider-2" oninput="slideTwo()">
+                <input type="range" min="0" max="500000" value="0" step="1000" id="slider-1" oninput="slideOne()">
+                <input type="range" min="0" max="500000" value="500000" step="1000" id="slider-2" oninput="slideTwo()">
             </div>
             <div class="price-input-flex">
-                <input type="number" id="minPriceInput" class="price-box-input" value="0" step="500" oninput="updateSliderOne()">
-                <input type="number" id="maxPriceInput" class="price-box-input" value="150000" step="500" oninput="updateSliderTwo()">
+                <input type="number" id="minPriceInput" class="price-box-input" value="0" step="1000" oninput="updateSliderOne()">
+                <input type="number" id="maxPriceInput" class="price-box-input" value="500000" step="1000" oninput="updateSliderTwo()">
             </div>
         </div>
         
@@ -253,110 +233,323 @@
     </div>
 
     <script>
-        // 設定 API 與全域變數
         const gasUrl = "https://script.google.com/macros/s/AKfycbzub2iPaJYGNF8hoavRM_UBvySTWgMrdBuDssni86VVSLQVF15OCP0JloTvIgw95Oo8lg/exec";
         let inventory = [], activeCat = 'All', isAdmin = false, navOpen = false, currentWine = null;
+        let currentLang = 'ZH'; // 全域語系變數：'ZH'、'EN'、'JP'
+ 
         const authConfig = { "0000": "Somm_A", "0001": "Somm_B", "0002": "Somm_C", "0003": "Somm_D", "9029": "YK" };
         let staffName = "Digital Menu";
+        const MAX_SLIDER_VAL = 500000;
+        
+        let openedBigCategories = new Set();
+        let selectedVarieties = [];
+        let selectedTags = [];
 
-        // 文字正規化處理 (用於搜尋)
+        const CATEGORY_ORDER = {
+            "By the Glass": 1, "Sparkling": 2, "Rosé": 3, "White Wine": 4, "Red Wine": 5,
+            "Sweet Wine": 6, "Fortified Wine": 7, "Sake": 8, "Spirits & Liquor": 9,
+            "Draft & Cocktails": 10, "Alcohol Free & Soft Drinks": 11, "Others": 12
+        };
+
         const normalizeText = (t) => t.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
-        // 從 Google Sheets 獲取資料
+        // Google翻譯
+        async function translateText(text, targetLang = 'en') {
+            if (!text) return "";
+            try {
+                const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`;
+                const res = await fetch(url);
+                const json = await res.json();
+                return json[0].map(item => item[0]).join(''); 
+            } catch (e) {
+                console.error("Translation Error:", e);
+                return text; 
+            }
+        }
+
+        // 獨立切換
+        function setLanguage(lang) {
+            currentLang = lang;
+            
+            // 語系按鈕
+            document.querySelectorAll(".lang-btn").forEach(btn => btn.classList.remove("active-lang"));
+            if (lang === 'ZH') document.getElementById("btn-zh").classList.add("active-lang");
+            if (lang === 'EN') document.getElementById("btn-en").classList.add("active-lang");
+            if (lang === 'JP') document.getElementById("btn-jp").classList.add("active-lang");
+
+            // 如果視窗即時翻譯
+            if (document.getElementById("wineModal").style.display === "block" && currentWine) {
+                openWineModalByRef(currentWine.ref, currentWine.name);
+            }
+        }
+
         async function loadData(isSilent = false) {
             if(!isSilent) document.getElementById('loader').style.display = 'flex';
             try {
                 const response = await fetch(`${gasUrl}?t=${Date.now()}`);
                 const data = await response.json();
-                if (!isSilent) renderNav(data.categories);
-                inventory = data.wines.map(r => ({
-                    bin: String(r[0]||""), ref: String(r[1]||""), country: r[2]||"", region: r[3]||"",
-                    name: String(r[4]||""), year: String(r[5]||""), size: String(r[6]||""),
-                    price: r[8]||0, stock: parseInt(r[11]||0), 
-                    desc: r[13]||"", photo: r[14]||"",
-                    category: r[r.length - 1] 
-                }));
-                filterWines();
-            } catch (e) { console.error("Sync Error:", e); }
-            document.getElementById('loader').style.display = 'none';
+                
+                const fetchedWines = data.wines.map(r => {
+                    const rawTabName = r[r.length - 1] || "";
+                    const name_lower = rawTabName.toLowerCase();
+                    
+                    let bigCategory = "Others";
+                    let subCategory = rawTabName; 
+                    
+                    if (name_lower.includes("glass")) {
+                        bigCategory = "By the Glass";
+                        subCategory = (name_lower.includes("spirits") || name_lower.includes("liquor")) ? "Spirits & Liquor" : "Wine";
+                    } 
+                    else if (name_lower.includes("champagne") || name_lower.includes("sparkling")) { bigCategory = "Sparkling"; } 
+                    else if (name_lower.includes("rosé") || name_lower.includes("rose")) { bigCategory = "Rosé"; } 
+                    else if (name_lower.includes("white")) { bigCategory = "White Wine"; } 
+                    else if (name_lower.includes("red")) { bigCategory = "Red Wine"; }
+                    else if (name_lower.includes("sweet") || name_lower.includes("dessert") || name_lower.includes("sauternes") || name_lower.includes("tokaji") || name_lower.includes("ice wine")) { bigCategory = "Sweet Wine"; }
+                    else if (name_lower.includes("fortified") || name_lower.includes("port") || name_lower.includes("sherry")) { bigCategory = "Fortified Wine"; }
+                    else if (name_lower.includes("sake") || name_lower.includes("nihonshu")) { bigCategory = "Sake"; }
+                    else if (name_lower.includes("spirits") || name_lower.includes("liquor")) { bigCategory = "Spirits & Liquor"; }
+                    else if (name_lower.includes("draft") || name_lower.includes("cocktail") || name_lower.includes("beer")) { bigCategory = "Draft & Cocktails"; }
+                    else if (name_lower.includes("alcohol free") || name_lower.includes("soft drink") || name_lower.includes("mocktail") || name_lower.includes("juice") || name_lower.includes("soda") || name_lower.includes("tea") || name_lower.includes("coffee")) { bigCategory = "Alcohol Free & Soft Drinks"; }
+
+                    return {
+                        bin: String(r[0] || ""), ref: String(r[1] || ""), country: r[2] || "", region: r[3] || "", sub_region: r[4] || "",    
+                        name: String(r[5] || ""), year: String(r[6] || ""), size: String(r[7] || ""), price: r[8] || 0,          
+                        stock: parseInt(r[11] || 0), desc: r[14] || "", photo: r[15] || "",        
+                        varieties: r[12] ? String(r[12]).split(/[,/]/).map(v => v.trim()).filter(v => v !== "") : [],
+                        tags: r[13] ? String(r[13]).split(/[,/]/).map(t => t.trim()).filter(t => t !== "") : [],
+                        category: subCategory, bigCategory: bigCategory, rawCategory: rawTabName    
+                    };
+                });
+
+                if (!isSilent) {
+                    renderNav(fetchedWines);
+                    inventory = fetchedWines;
+                    renderFilters(); 
+                }
+                
+                if (isSilent && inventory.length === fetchedWines.length) {
+                    fetchedWines.forEach(newWine => {
+                        const oldWine = inventory.find(w => w.ref === newWine.ref && w.name === newWine.name);
+                        if (oldWine) {
+                            if (oldWine.stock !== newWine.stock || oldWine.bin !== newWine.bin) {
+                                oldWine.stock = newWine.stock;
+                                oldWine.bin = newWine.bin;
+    
+                                const wineDOM = document.querySelector(`[data-ref="${newWine.ref}"]`);
+                                if (wineDOM) {
+                                    const isSoldOut = newWine.stock <= 0;
+                                    wineDOM.classList.toggle('sold-out', isSoldOut);
+                                    const badge = wineDOM.querySelector('.badge-sold-out');
+                                    if (badge) badge.style.display = isSoldOut ? 'inline-block' : 'none';
+                                    const binText = wineDOM.querySelector('.bin-text');
+                                    if (binText) binText.innerText = newWine.bin;
+                                }
+
+                                if (currentWine && currentWine.ref === newWine.ref && currentWine.name === newWine.name) {
+                                    document.getElementById("modalMetaInfo").innerHTML = `BIN: ${newWine.bin} | REF: ${newWine.ref} | ${newWine.size} | Stock: ${newWine.stock}`;
+                                    document.getElementById("sommTip").style.display = newWine.stock <= 0 ? "block" : "none";
+                                    if (isAdmin) {
+                                        document.getElementById("editBin").value = newWine.bin;
+                                        document.getElementById("editStock").value = newWine.stock;
+                                    }
+                                }
+                            }
+                        }
+                    });
+                } else {
+                    inventory = fetchedWines;
+                    filterWines();
+                }
+            } catch (e) { 
+                console.error("Sync Error:", e);
+            } finally {
+                if (!isSilent) {
+                    setTimeout(() => { document.getElementById('loader').style.display = 'none'; }, 300);
+                }
+            }
         }
 
-        // 渲染側邊選單分類
-        function renderNav(categories) {
+        function renderNav(wines) {
             const nav = document.getElementById('dynamicNav');
-            nav.innerHTML = `<a onclick="renderCategory('All')">All Categories</a><hr style="border:0; border-top:1px solid #333; margin: 10px 30px;">`;
-            categories.forEach(cat => {
-                const a = document.createElement('a'); a.onclick = () => renderCategory(cat); a.innerText = cat; nav.appendChild(a);
+            nav.innerHTML = `<a class="all-cat-btn" onclick="renderCategory('All')">All Categories</a><hr style="border:0; border-top:1px solid #333; margin: 0 30px 10px 30px;">`;
+            
+            const structure = new Map();
+            wines.forEach(w => {
+                if (!w.category) return; 
+                if (!structure.has(w.bigCategory)) structure.set(w.bigCategory, new Set());
+                structure.get(w.bigCategory).add(w.category);
+            });
+
+            const sortedBigCats = Array.from(structure.keys()).sort((a, b) => (CATEGORY_ORDER[a] || 99) - (CATEGORY_ORDER[b] || 99));
+
+            sortedBigCats.forEach(bigCat => {
+                const subTabs = structure.get(bigCat);
+                if (!subTabs || subTabs.size === 0) return;
+
+                const block = document.createElement('div');
+                block.className = 'big-cat-block';
+                if (openedBigCategories.has(bigCat)) block.classList.add('active');
+
+                const trigger = document.createElement('button');
+                trigger.className = 'big-cat-trigger';
+                trigger.innerHTML = `<span>${bigCat}</span><span class="arrow">▼</span>`;
+                
+                const subContainer = document.createElement('div');
+                subContainer.className = 'sub-tabs-container';
+                if (openedBigCategories.has(bigCat)) subContainer.append(subContainer);
+
+                trigger.onclick = () => {
+                    const isOpen = subContainer.classList.contains('show');
+                    document.querySelectorAll('.sub-tabs-container').forEach(c => c.classList.remove('show'));
+                    document.querySelectorAll('.big-cat-block').forEach(b => b.classList.remove('active'));
+                    openedBigCategories.clear();
+
+                    if (!isOpen) {
+                        subContainer.classList.add('show');
+                        block.classList.add('active');
+                        openedBigCategories.add(bigCat);
+                    }
+                };
+
+                Array.from(subTabs).sort().forEach(subCat => {
+                    const a = document.createElement('a');
+                    a.className = 'sub-tab-link';
+                    a.dataset.category = subCat; 
+                    if (activeCat === subCat) a.classList.add('active-sub');
+                    
+                    let displayName = subCat.replace(/\b(red wine|white wine|wine|red|white|sweet|fortified|rosé|rose)\b/ig, '').replace(/\s+/g, ' ').trim();
+                    a.innerText = displayName || subCat; 
+                    
+                    a.onclick = () => renderCategory(subCat);
+                    subContainer.appendChild(a);
+                });
+
+                block.appendChild(trigger);
+                block.appendChild(subContainer);
+                nav.appendChild(block);
             });
         }
 
-        // 渲染酒款清單
+        function renderFilters() {
+            const varietySet = new Set(), tagSet = new Set();
+            inventory.forEach(w => {
+                if (w.varieties) w.varieties.forEach(v => { if(v) varietySet.add(v); });
+                if (w.tags) w.tags.forEach(t => { if(t) tagSet.add(t); });
+            });
+
+            const vSection = document.getElementById('varietySection'), vContainer = document.getElementById('varietyContainer');
+            if (varietySet.size > 0) {
+                vSection.style.display = 'block';
+                vContainer.innerHTML = Array.from(varietySet).sort().map(v => `<label class="filter-checkbox-label"><input type="checkbox" value="${v}" class="variety-chk" ${selectedVarieties.includes(v) ? 'checked' : ''} onchange="handleVarietyChange()"><span>${v}</span></label>`).join('');
+            } else { vSection.style.display = 'none'; }
+
+            const tSection = document.getElementById('tagSection'), tContainer = document.getElementById('tagContainer');
+            if (tagSet.size > 0) {
+                tSection.style.display = 'block';
+                tContainer.innerHTML = Array.from(tagSet).sort().map(t => `<label class="filter-checkbox-label"><input type="checkbox" value="${t}" class="tag-chk" ${selectedTags.includes(t) ? 'checked' : ''} onchange="handleTagChange()"><span>${t}</span></label>`).join('');
+            } else { tSection.style.display = 'none'; }
+        }
+
+        function handleVarietyChange() { selectedVarieties = Array.from(document.querySelectorAll('.variety-chk:checked')).map(cb => cb.value); filterWines(); }
+        function handleTagChange() { selectedTags = Array.from(document.querySelectorAll('.tag-chk:checked')).map(cb => cb.value); filterWines(); }
+
         function renderWines(data) {
             const listArea = document.getElementById('wineList');
             if(data.length === 0) { listArea.innerHTML = "<p style='text-align:center; color:#999; padding:40px;'>No wines found.</p>"; return; }
             listArea.innerHTML = data.map(wine => {
                 const isSoldOut = wine.stock <= 0;
+                const originString = `${wine.country}${wine.region ? ' | ' + wine.region : ''}${wine.sub_region ? ' | ' + wine.sub_region : ''}`;
                 return `
-                <div class="wine-item ${isSoldOut ? 'sold-out' : ''}" onclick='openWineModal(${JSON.stringify(wine).replace(/'/g, "&apos;")})'>
+                <div class="wine-item ${isSoldOut ? 'sold-out' : ''}" data-ref="${wine.ref}" onclick="openWineModalByRef('${wine.ref}', '${wine.name.replace(/'/g, "\\'")}')">
                     <div>
-                        <div style="font-family:var(--font-data); font-size:0.75rem; font-weight:600; color:var(--gold); margin-bottom:8px;">${wine.country} ${wine.region ? '| '+wine.region : ''}</div>
-                        <div class="wine-name-row">${wine.name} <span style="color:var(--gold);font-weight:300;">${wine.year}</span> ${isSoldOut ? '<span style="font-size:0.6rem;background:#888;color:#fff;padding:2px 6px;margin-left:10px;border-radius:2px;">SOLD OUT</span>' : ''}</div>
-                        <div style="font-size:0.75rem; color:var(--light-grey); margin-top:5px; font-family:var(--font-data);">BIN: ${wine.bin} | REF: ${wine.ref} | ${wine.size}</div>
+                        <div style="font-family:var(--font-data); font-size:0.75rem; font-weight:600; color:var(--gold); margin-bottom:8px;">${originString}</div>
+                        <div class="wine-name-row">
+                            ${wine.name} <span style="color:var(--gold);font-weight:300;">${wine.year}</span> 
+                            <span class="badge-sold-out" style="font-size:0.6rem;background:#888;color:#fff;padding:2px 6px;margin-left:10px;border-radius:2px; display: ${isSoldOut ? 'inline-block' : 'none'};">SOLD OUT</span>
+                        </div>
+                        <div style="font-size:0.75rem; color:var(--light-grey); margin-top:8px; font-family:var(--font-data);">BIN: <span class="bin-text">${wine.bin}</span> | REF: ${wine.ref} | ${wine.size}</div>
                     </div>
-                    <div class="price-box">
-                        <span>NT$</span>
-                        <span>${parseInt(wine.price).toLocaleString()}</span>
-                    </div>
+                    <div class="price-box"><span>NT$</span><span>${parseInt(wine.price).toLocaleString()}</span></div>
                 </div>`;
             }).join('');
         }
 
-        // 篩選搜尋邏輯
         function filterWines() {
             const query = normalizeText(document.getElementById('wineSearch').value);
             const min = parseInt(document.getElementById('minPriceInput').value) || 0;
-            const max = parseInt(document.getElementById('maxPriceInput').value) || 999999;
-            const base = (activeCat === 'All') ? inventory : inventory.filter(w => w.category === activeCat);
+            const max = parseInt(document.getElementById('maxPriceInput').value) || 9999999;
+            
+            const bottleCategories = ["Sparkling", "Rosé", "White Wine", "Red Wine", "Sweet Wine", "Fortified Wine", "Sake", "Spirits & Liquor"];
+            const base = (activeCat === 'All') ? inventory.filter(w => bottleCategories.includes(w.bigCategory)) : inventory.filter(w => w.category === activeCat);
+          
             renderWines(base.filter(w => {
                 const p = parseInt(w.price);
-                const matchQuery = normalizeText(w.ref + w.name + w.year + w.country).includes(query);
-                return (p >= min && p <= max) && matchQuery;
+                const matchQuery = normalizeText(w.ref + w.name + w.year + w.country + w.region + w.sub_region + w.varieties.join(' ')).includes(query);
+                const matchPrice = (p >= min && p <= max);
+                const matchVariety = selectedVarieties.length === 0 || selectedVarieties.every(v => w.varieties.includes(v));
+                const matchTags = selectedTags.length === 0 || selectedTags.every(t => w.tags.includes(t));
+                return matchQuery && matchPrice && matchVariety && matchTags;
             }));
         }
 
-        // 開啟詳情彈窗
-        function openWineModal(wine) {
+        // ZH EN JP
+        function openWineModalByRef(ref, name) {
+            const wine = inventory.find(w => w.ref === ref && w.name === name);
+            if (!wine) return;
+            
             currentWine = wine;
             const modal = document.getElementById("wineModal");
             
             modal.style.display = "block";
             document.getElementById("fixedCloseBtn").style.display = "block";
             document.body.style.overflow = "hidden";
-
-            // 確保置頂
-            setTimeout(() => {
-                modal.scrollTop = 0;
-                document.getElementById("modalScrollTarget").scrollTop = 0;
-            }, 10);
-
-            // 酒款資訊
-            document.getElementById("modalWineName").innerText = wine.name + " " + wine.year;
-            document.getElementById("modalOrigin").innerText = wine.country + (wine.region ? " | " + wine.region : "");
-            document.getElementById("modalPrice").innerText = "NT$ " + parseInt(wine.price).toLocaleString();
-            document.getElementById("modalDescription").innerText = wine.desc || "";
-            document.getElementById("modalMetaInfo").innerText = `BIN: ${wine.bin} | REF: ${wine.ref} | ${wine.size} | Stock: ${wine.stock}`;
-            document.getElementById("sommTip").style.display = wine.stock <= 0 ? "block" : "none";
+            setTimeout(() => { modal.scrollTop = 0; document.getElementById("modalScrollTarget").scrollTop = 0; }, 10);
             
-            // 處理圖片顯示
-            const img = document.getElementById("modalImage");
-            if (wine.photo && wine.photo.startsWith("http")) { 
-                img.src = wine.photo; 
-                img.style.display = "block"; 
-            } else { 
-                img.style.display = "none"; 
+            document.getElementById("modalWineName").innerText = wine.name + " " + wine.year;
+            document.getElementById("modalOrigin").innerText = wine.country + (wine.region ? " | " + wine.region : "") + (wine.sub_region ? " | " + wine.sub_region : "");
+            document.getElementById("modalPrice").innerText = "NT$ " + parseInt(wine.price).toLocaleString();
+            
+            const descElement = document.getElementById("modalDescription");
+            
+            // 依據currentLang翻譯或載入快取
+            if (currentLang === 'ZH') {
+                descElement.innerText = wine.desc || ""; // 原文
+            } 
+            else if (currentLang === 'EN' && wine.desc) {
+                if (!wine.desc_en) {
+                    descElement.innerText = "Translating description to English...";
+                    translateText(wine.desc, 'en').then(translatedText => {
+                        wine.desc_en = translatedText; // 快取英文
+                        if (currentWine && currentWine.ref === wine.ref && currentWine.name === wine.name && currentLang === 'EN') {
+                            descElement.innerText = translatedText;
+                        }
+                    });
+                } else {
+                    descElement.innerText = wine.desc_en;
+                }
+            } 
+            else if (currentLang === 'JP' && wine.desc) {
+                if (!wine.desc_jp) {
+                    descElement.innerText = "説明を日本語に翻訳中...";
+                    translateText(wine.desc, 'ja').then(translatedText => {
+                        wine.desc_jp = translatedText; // 快取日文
+                        if (currentWine && currentWine.ref === wine.ref && currentWine.name === wine.name && currentLang === 'JP') {
+                            descElement.innerText = translatedText;
+                        }
+                    });
+                } else {
+                    descElement.innerText = wine.desc_jp;
+                }
+            } else {
+                descElement.innerText = "";
             }
             
-            // 管理員模式處理
+            document.getElementById("modalMetaInfo").innerHTML = `BIN: ${wine.bin} | REF: ${wine.ref} | ${wine.size} | Stock: ${wine.stock}`;
+            document.getElementById("sommTip").style.display = wine.stock <= 0 ? "block" : "none";
+            
+            const img = document.getElementById("modalImage");
+            if (wine.photo && wine.photo.startsWith("http")) { img.src = wine.photo; img.style.display = "block"; } else { img.style.display = "none"; }
+            
             document.getElementById("adminEditor").style.display = isAdmin ? "block" : "none";
             if(isAdmin) {
                 document.getElementById("adminBadge").innerText = `Logged in as: ${staffName.toUpperCase()}`;
@@ -366,122 +559,79 @@
             }
         }
 
-        // 關閉詳情彈窗
-        function closeModal() { 
-            document.getElementById("wineModal").style.display = "none";
-            document.getElementById("fixedCloseBtn").style.display = "none"; 
-            document.body.style.overflow = "auto"; 
-        }
+        function closeModal() { document.getElementById("wineModal").style.display = "none"; document.getElementById("fixedCloseBtn").style.display = "none"; document.body.style.overflow = "auto"; }
+        document.getElementById("wineModal").addEventListener('click', function(e) { if (e.target === this) closeModal(); });
 
-        // 點擊背景處關閉彈窗
-        document.getElementById("wineModal").addEventListener('click', function(e) {
-            if (e.target === this) closeModal();
-        });
-
-        // 儲存管理員修改
         async function saveAdminChange() {
             const newBin = document.getElementById("editBin").value.trim();
             const newStock = document.getElementById("editStock").value.trim();
             const btn = document.getElementById("saveBtn");
             if (!newBin || newStock === "") { alert("Please enter valid Bin and Stock."); return; }
             
-            btn.innerText = "UPDATING...";
-            btn.disabled = true;
-            
+            btn.innerText = "UPDATING..."; btn.disabled = true;
             try {
                 await fetch(gasUrl, {
-                    method: "POST", mode: "no-cors",
+                    method: "POST", mode: "no-cors", 
                     body: JSON.stringify({ 
-                        oldBin: currentWine.bin, ref: currentWine.ref || "", name: currentWine.name, 
-                        year: currentWine.year, newBin: newBin, newStock: newStock, staff: staffName 
+                        oldBin: currentWine.bin, ref: currentWine.ref || "", name: currentWine.name, year: currentWine.year, 
+                        newBin: newBin, newStock: newStock, staff: staffName, category: currentWine.rawCategory 
                     })
                 });
                 currentWine.bin = newBin;
                 currentWine.stock = parseInt(newStock);
-                document.getElementById("modalMetaInfo").innerText = `BIN: ${newBin} | REF: ${currentWine.ref} | ${currentWine.size} | Stock: ${newStock}`;
-                btn.innerText = "SUCCESSFULLY UPDATED";
-                btn.style.background = "#af9462";
-                btn.style.color = "#fff";
+                
+                const wineDOM = document.querySelector(`[data-ref="${currentWine.ref}"]`);
+                if (wineDOM) {
+                    const isSoldOut = currentWine.stock <= 0;
+                    wineDOM.classList.toggle('sold-out', isSoldOut);
+                    const badge = wineDOM.querySelector('.badge-sold-out');
+                    if (badge) badge.style.display = isSoldOut ? 'inline-block' : 'none';
+                    const binText = wineDOM.querySelector('.bin-text');
+                    if (binText) binText.innerText = newBin;
+                }
+
+                document.getElementById("modalMetaInfo").innerHTML = `BIN: ${newBin} | REF: ${currentWine.ref} | ${currentWine.size} | Stock: ${newStock}`;
+                document.getElementById("sommTip").style.display = currentWine.stock <= 0 ? "block" : "none";
+                
+                btn.innerText = "SUCCESSFULLY UPDATED"; btn.style.background = "#af9462"; btn.style.color = "#fff";
                 setTimeout(resetBtnState, 2000);
-                loadData(true);
-            } catch (e) { 
-                btn.innerText = "ERROR"; 
-                btn.disabled = false; 
-            }
+                loadData(true); 
+            } catch (e) { btn.innerText = "ERROR"; btn.disabled = false; }
         }
 
-        function resetBtnState() { 
-            const btn = document.getElementById("saveBtn"); 
-            btn.innerText = "Update Database"; 
-            btn.style.background = "var(--steakhouse-black)"; 
-            btn.style.color = "var(--gold)";
-            btn.disabled = false; 
-        }
+        function resetBtnState() { const btn = document.getElementById("saveBtn"); btn.innerText = "Update Database"; btn.style.background = "var(--steakhouse-black)"; btn.style.color = "var(--gold)"; btn.disabled = false; }
 
-        // 登入驗證
         function promptAdmin() {
             const code = prompt("Enter Staff Access Code:");
             if (authConfig.hasOwnProperty(code)) {
                 isAdmin = true; staffName = authConfig[code];
                 document.getElementById("adminPortalArea").innerHTML = `<div style="padding:20px; text-align:center;"><div style="color:var(--gold); font-size:0.6rem; margin-bottom:10px;">Logged in as: ${staffName}</div><button onclick="location.reload()" style="background:none; border:1px solid var(--gold); color:var(--gold); cursor:pointer; padding:5px 10px; font-family:var(--font-data);">Logout</button></div>`;
                 if (navOpen) toggleNav();
-            } else if (code !== null) { 
-                alert("Invalid Access Code."); 
-            }
+            } else if (code !== null) { alert("Invalid Access Code."); }
         }
 
-        // 側邊導覽欄開關
         function toggleNav() {
             const s = document.getElementById("mySidenav"), b = document.getElementById("mainMenuBtn");
             const icon = document.getElementById("menuIcon"), text = document.getElementById("btnText");
-            if (!navOpen) { 
-                s.style.width = "280px"; 
-                b.classList.add("active-menu"); 
-                icon.innerText = "✕"; 
-                text.innerText = "Close"; 
-                navOpen = true; 
-            } 
-            else { 
-                s.style.width = "0"; 
-                b.classList.remove("active-menu"); 
-                icon.innerText = "☰"; 
-                text.innerText = "Menu"; 
-                navOpen = false; 
-            }
+            if (!navOpen) { s.style.width = "280px"; b.classList.add("active-menu"); icon.innerText = "✕"; text.innerText = "Close"; navOpen = true; } 
+            else { s.style.width = "0"; b.classList.remove("active-menu"); icon.innerText = "☰"; text.innerText = "Menu"; navOpen = false; }
         }
 
         function renderCategory(cat) { 
-            activeCat = cat; 
-            document.getElementById('pageTitle').innerText = (cat === 'All' ? 'Wine List' : cat); 
+            activeCat = cat; selectedVarieties = []; selectedTags = [];
+            document.getElementById('pageTitle').innerText = (cat === 'All' ? 'Wine List' : cat);
+            document.querySelectorAll('.sub-tab-link').forEach(link => { link.classList.toggle('active-sub', link.dataset.category === cat); });
             if (navOpen) toggleNav(); 
             filterWines(); 
         }
         
-        /* 雙頭價格滑桿控制 */
-        function slideOne() { 
-            let s1 = document.getElementById("slider-1"), s2 = document.getElementById("slider-2");
-            if (parseInt(s2.value) - parseInt(s1.value) <= 1000) s1.value = parseInt(s2.value) - 1000; 
-            document.getElementById("minPriceInput").value = s1.value; fillColor(); filterWines();
-        }
-        function slideTwo() { 
-            let s1 = document.getElementById("slider-1"), s2 = document.getElementById("slider-2");
-            if (parseInt(s2.value) - parseInt(s1.value) <= 1000) s2.value = parseInt(s1.value) + 1000; 
-            document.getElementById("maxPriceInput").value = s2.value; fillColor(); filterWines();
-        }
-        function fillColor() { 
-            let s1 = document.getElementById("slider-1"), s2 = document.getElementById("slider-2");
-            let p1 = (s1.value/150000)*100, p2 = (s2.value/150000)*100; 
-            document.getElementById("sliderTrack").style.background = `linear-gradient(to right, #444 ${p1}%, var(--gold) ${p1}%, var(--gold) ${p2}%, #444 ${p2}%)`;
-        }
+        function slideOne() { let s1 = document.getElementById("slider-1"), s2 = document.getElementById("slider-2"); if (parseInt(s2.value) - parseInt(s1.value) <= 2000) s1.value = parseInt(s2.value) - 2000; document.getElementById("minPriceInput").value = s1.value; fillColor(); filterWines(); }
+        function slideTwo() { let s1 = document.getElementById("slider-1"), s2 = document.getElementById("slider-2"); if (parseInt(s2.value) - parseInt(s1.value) <= 2000) s2.value = parseInt(s1.value) + 2000; document.getElementById("maxPriceInput").value = s2.value; fillColor(); filterWines(); }
+        function fillColor() { let s1 = document.getElementById("slider-1"), s2 = document.getElementById("slider-2"); let p1 = (s1.value / MAX_SLIDER_VAL) * 100, p2 = (s2.value / MAX_SLIDER_VAL) * 100; document.getElementById("sliderTrack").style.background = `linear-gradient(to right, #444 0%, #444 ${p1}%, var(--gold) ${p1}%, var(--gold) ${p2}%, #444 ${p2}%, #444 100%)`; }
         function updateSliderOne() { document.getElementById("slider-1").value = document.getElementById("minPriceInput").value; fillColor(); filterWines(); }
         function updateSliderTwo() { document.getElementById("slider-2").value = document.getElementById("maxPriceInput").value; fillColor(); filterWines(); }
-        function resetPriceRange() {
-            document.getElementById("slider-1").value = 0; document.getElementById("slider-2").value = 150000;
-            document.getElementById("minPriceInput").value = 0; document.getElementById("maxPriceInput").value = 150000;
-            fillColor(); filterWines();
-        }
+        function resetPriceRange() { document.getElementById("slider-1").value = 0; document.getElementById("slider-2").value = MAX_SLIDER_VAL; document.getElementById("minPriceInput").value = 0; document.getElementById("maxPriceInput").value = MAX_SLIDER_VAL; fillColor(); filterWines(); }
 
-        /* 初始化 */
         loadData();
         setInterval(() => loadData(true), 5000);
     </script>
